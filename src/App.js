@@ -13,7 +13,11 @@ class App extends React.Component {
     return (
       <div className="main-box">
         <Switch>
-          <Route exact path="/" render={ () => <Login /> } />
+          <Route
+            exact
+            path="/"
+            render={ (props) => (<Login { ...props } />) }
+          />
           <Route exact path="/search" render={ () => <Search /> } />
           <Route exact path="/album/:id" render={ () => <Album /> } />
           <Route exact path="/favorites" render={ () => <Favorites /> } />
