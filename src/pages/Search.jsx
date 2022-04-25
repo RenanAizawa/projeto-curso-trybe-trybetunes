@@ -8,7 +8,9 @@ class Search extends React.Component {
     super();
     this.state = {
       userName: '',
+      pesquisa: '',
       load: false,
+      isBtnDisebled: true,
     };
   }
 
@@ -25,8 +27,21 @@ class Search extends React.Component {
     });
   }
 
+  artistName = (e) => {
+    const { value } = e.target;
+    this.setState({ pesquisa: value }, () => {
+      const { pesquisa } = this.state;
+      const rule = 2;
+      if (pesquisa.length >= rule) {
+        this.setState({ isBtnDisebled: false });
+      } else {
+        this.setState({ isBtnDisebled: true });
+      }
+    });
+  }
+
   render() {
-    const { load, userName } = this.state;
+    const { load, userName, isBtnDisebled } = this.state;
     return (
       <div data-testid="page-search">
         {
@@ -35,10 +50,19 @@ class Search extends React.Component {
             : <Header user={ userName } />
         }
         <div>
-          <h1>oi sou child search</h1>
           <form>
-            <input type="text" />
-            <button type="button">Pesquisar</button>
+            <input
+              type="text"
+              data-testid="search-artist-input"
+              onChange={ (e) => this.artistName(e) }
+            />
+            <button
+              type="button"
+              data-testid="search-artist-button"
+              disabled={ isBtnDisebled }
+            >
+              Pesquisar
+            </button>
           </form>
         </div>
       </div>
