@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Album extends React.Component {
+class MusicCard extends React.Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ class Album extends React.Component {
   }
 }
 
-export default Album;
+export default MusicCard;
