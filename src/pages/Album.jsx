@@ -1,9 +1,10 @@
 import React from 'react';
+import Album from '../components/Album';
 import Carregando from '../components/Carregando';
 import Header from '../components/Header';
 import { getUser } from '../services/userAPI';
 
-class Album extends React.Component {
+class AlbumId extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -35,11 +36,11 @@ class Album extends React.Component {
             : <Header user={ userName } />
         }
         <div>
-          <h1>oi sou child box</h1>
+          <Album />
         </div>
       </div>
     );
   }
 }
 
-export default Album;
+export default AlbumId;
