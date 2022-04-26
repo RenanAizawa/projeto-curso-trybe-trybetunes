@@ -3,6 +3,7 @@ import React from 'react';
 import Carregando from '../components/Carregando';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
+import { addSong } from '../services/favoriteSongsAPI';
 import getMusics from '../services/musicsAPI';
 import { getUser } from '../services/userAPI';
 
@@ -15,6 +16,7 @@ class AlbumId extends React.Component {
       load2: false,
       infoAlbum: [],
       musicasDoAlbum: [],
+      musicasFavoritadas: [],
     };
   }
 
@@ -45,8 +47,27 @@ class AlbumId extends React.Component {
     });
   }
 
+  addFavMusic = async (e, music) => {
+    const { type, value } = e.target;
+    if ((type === 'checkbox') && (value === 'on')) {
+      this.setState({ load2: true });
+      await addSong(music);
+      this.setState((prevState) => ({
+        load2: false,
+        musicasFavoritadas: [...prevState.musicasFavoritadas, music.trackId],
+      }));
+    }
+  }
+
   render() {
-    const { load, userName, load2, infoAlbum, musicasDoAlbum } = this.state;
+    const {
+      load,
+      userName,
+      load2,
+      infoAlbum,
+      musicasDoAlbum,
+      musicasFavoritadas,
+    } = this.state;
     return (
       <div data-testid="page-album">
         {
@@ -76,7 +97,12 @@ class AlbumId extends React.Component {
                 {
                   musicasDoAlbum.map((track) => (
                     <div key={ track.trackId }>
-                      <MusicCard track={ track } />
+                      <MusicCard
+                        track={ track }
+                        addFavMusic={ (e) => this.addFavMusic(e, track) }
+                        checked={ musicasFavoritadas
+                          .some((id) => (track.trackId === id)) }
+                      />
                     </div>
                   ))
                 }
