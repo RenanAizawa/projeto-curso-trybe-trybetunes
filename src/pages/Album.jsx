@@ -37,7 +37,7 @@ class AlbumId extends React.Component {
     this.setState({ load2: true });
     const albumPesquisado = await getMusics(id);
     const musicasDoAlbum = albumPesquisado
-      .filter((obj) => (obj.wrapperType !== 'collection'));
+      .filter((obj, index) => (index !== 0));
     this.setState({
       infoAlbum: albumPesquisado[0],
       load2: false,
