@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Carregando from '../components/Carregando';
 import Header from '../components/Header';
+import MusicCard from '../components/MusicCard';
 import getMusics from '../services/musicsAPI';
 import { getUser } from '../services/userAPI';
 
@@ -46,7 +47,6 @@ class AlbumId extends React.Component {
 
   render() {
     const { load, userName, load2, infoAlbum, musicasDoAlbum } = this.state;
-    console.log(musicasDoAlbum);
     return (
       <div data-testid="page-album">
         {
@@ -76,7 +76,7 @@ class AlbumId extends React.Component {
                 {
                   musicasDoAlbum.map((track) => (
                     <div key={ track.trackId }>
-                      <p>{track.trackName}</p>
+                      <MusicCard track={ track } />
                     </div>
                   ))
                 }
