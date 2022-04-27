@@ -13,7 +13,7 @@ class AlbumId extends React.Component {
     this.state = {
       userName: '',
       load: false,
-      load2: false,
+      load2: true,
       infoAlbum: [],
       musicasDoAlbum: [],
       musicasFavoritadas: [],
@@ -24,20 +24,21 @@ class AlbumId extends React.Component {
   async componentDidMount() {
     await this.carregandoUsuario();
     await this.albumRecuperado();
-    this.setState({ load2: true });
+    // this.setState({ load2: true });
     const respostaApi = await getFavoriteSongs();
     this.setState({
       musicasRecuperadas: [...respostaApi],
       load2: false,
-    });
-    const { musicasRecuperadas } = this.state;
-    const ids = [];
-    musicasRecuperadas
-      .map((track) => (
-        ids.push(track.trackId)
-      ));
-    this.setState({
-      musicasFavoritadas: [...ids],
+    }, () => {
+      const { musicasRecuperadas } = this.state;
+      const ids = [];
+      musicasRecuperadas
+        .map((track) => (
+          ids.push(track.trackId)
+        ));
+      this.setState({
+        musicasFavoritadas: [...ids],
+      });
     });
   }
 
@@ -64,8 +65,8 @@ class AlbumId extends React.Component {
   }
 
   addFavMusic = async (e, music) => {
-    const { type, value } = e.target;
-    if ((type === 'checkbox') && (value === 'on')) {
+    const { checked } = e.target;
+    if (checked) {
       this.setState({ load2: true });
       await addSong(music);
       this.setState((prevState) => ({
