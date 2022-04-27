@@ -3,7 +3,7 @@ import React from 'react';
 import Carregando from '../components/Carregando';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import getMusics from '../services/musicsAPI';
 import { getUser } from '../services/userAPI';
 
@@ -17,12 +17,28 @@ class AlbumId extends React.Component {
       infoAlbum: [],
       musicasDoAlbum: [],
       musicasFavoritadas: [],
+      musicasRecuperadas: [],
     };
   }
 
   async componentDidMount() {
     await this.carregandoUsuario();
     await this.albumRecuperado();
+    this.setState({ load2: true });
+    const respostaApi = await getFavoriteSongs();
+    this.setState({
+      musicasRecuperadas: [...respostaApi],
+      load2: false,
+    });
+    const { musicasRecuperadas } = this.state;
+    const ids = [];
+    musicasRecuperadas
+      .map((track) => (
+        ids.push(track.trackId)
+      ));
+    this.setState({
+      musicasFavoritadas: [...ids],
+    });
   }
 
   carregandoUsuario = async () => {
