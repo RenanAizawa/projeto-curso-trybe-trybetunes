@@ -25,21 +25,7 @@ class AlbumId extends React.Component {
     await this.carregandoUsuario();
     await this.albumRecuperado();
     // this.setState({ load2: true });
-    const respostaApi = await getFavoriteSongs();
-    this.setState({
-      musicasRecuperadas: [...respostaApi],
-      load2: false,
-    }, () => {
-      const { musicasRecuperadas } = this.state;
-      const ids = [];
-      musicasRecuperadas
-        .map((track) => (
-          ids.push(track.trackId)
-        ));
-      this.setState({
-        musicasFavoritadas: [...ids],
-      });
-    });
+    await this.recuperaFav();
   }
 
   carregandoUsuario = async () => {
@@ -61,6 +47,24 @@ class AlbumId extends React.Component {
       infoAlbum: albumPesquisado[0],
       load2: false,
       musicasDoAlbum,
+    });
+  }
+
+  recuperaFav = async () => {
+    const respostaApi = await getFavoriteSongs();
+    this.setState({
+      musicasRecuperadas: [...respostaApi],
+      load2: false,
+    }, () => {
+      const { musicasRecuperadas } = this.state;
+      const ids = [];
+      musicasRecuperadas
+        .map((track) => (
+          ids.push(track.trackId)
+        ));
+      this.setState({
+        musicasFavoritadas: [...ids],
+      });
     });
   }
 
