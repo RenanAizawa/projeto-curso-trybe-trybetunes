@@ -21,11 +21,11 @@ class AlbumId extends React.Component {
     };
   }
 
-  async componentDidMount() {
-    await this.carregandoUsuario();
-    await this.albumRecuperado();
+  componentDidMount() {
+    this.carregandoUsuario();
+    this.albumRecuperado();
     // this.setState({ load2: true });
-    await this.recuperaFav();
+    this.recuperaFav();
   }
 
   carregandoUsuario = async () => {
