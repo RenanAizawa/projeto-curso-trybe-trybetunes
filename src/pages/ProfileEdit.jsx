@@ -29,16 +29,15 @@ class ProfileEdit extends React.Component {
       description: user.description,
       image: user.image,
       load: false,
+    }, () => {
+      this.handleBtnDisebled();
     });
   }
 
   handleChange = (e) => {
     const { value, name } = e.target;
     this.setState({ [name]: value }, () => {
-      const { nome, email, description, image } = this.state;
-      if (nome && email && description && image) {
-        this.setState({ isDisebled: false });
-      }
+      this.handleBtnDisebled();
     });
   }
 
@@ -55,6 +54,13 @@ class ProfileEdit extends React.Component {
       await updateUser(newUser);
       history.push('/profile');
     });
+  }
+
+  handleBtnDisebled = () => {
+    const { nome, email, description, image } = this.state;
+    if (nome && email && description && image) {
+      this.setState({ isDisebled: false });
+    }
   }
 
   render() {
