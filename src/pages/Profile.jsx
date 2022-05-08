@@ -12,7 +12,7 @@ class Profile extends React.Component {
       userMail: '',
       userDescription: '',
       userImage: '',
-      load: false,
+      load: true,
     };
   }
 
@@ -21,7 +21,6 @@ class Profile extends React.Component {
   }
 
   carregandoUsuario = async () => {
-    this.setState({ load: true });
     const user = await getUser();
     this.setState({
       load: false,
