@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Carregando from '../components/Carregando';
 import Header from '../components/Header';
 import { getUser } from '../services/userAPI';
@@ -8,12 +9,15 @@ class Profile extends React.Component {
     super();
     this.state = {
       userName: '',
+      userMail: '',
+      userDescription: '',
+      userImage: '',
       load: false,
     };
   }
 
-  async componentDidMount() {
-    await this.carregandoUsuario();
+  componentDidMount() {
+    this.carregandoUsuario();
   }
 
   carregandoUsuario = async () => {
@@ -22,11 +26,14 @@ class Profile extends React.Component {
     this.setState({
       load: false,
       userName: user.name,
+      userMail: user.email,
+      userDescription: user.description,
+      userImage: user.image,
     });
   }
 
   render() {
-    const { load, userName } = this.state;
+    const { load, userName, userMail, userDescription, userImage } = this.state;
     return (
       <div data-testid="page-profile">
         {
@@ -35,7 +42,11 @@ class Profile extends React.Component {
             : <Header user={ userName } />
         }
         <div>
-          <h1>oi sou child box</h1>
+          <img src={ userImage } alt={ userName } data-testid="profile-image" />
+          <h1>{userName}</h1>
+          <Link to="/profile/edit">Editar perfil</Link>
+          <p>{userMail}</p>
+          <p>{userDescription}</p>
         </div>
       </div>
     );
